@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: raw
+    database: dev
+    schema: raw
+    description: "Transactional source database seeded from e-commerce operational systems."
+    tables:
+      - name: raw_customers
+        description: "Raw customer registrations with contact emails and acquisition channels."
+        columns:
+          - name: customer_id
+            description: "Primary key for customer registrations."
+            tests:
+              - unique
+              - not_null
+      - name: raw_products
+        description: "Raw product catalog with retail prices and unit COGS in cents."
+        columns:
+          - name: product_id
+            description: "Primary key for products."
+            tests:
+              - unique
+              - not_null
+      - name: raw_orders
+        description: "Raw orders placed by customers."
+        columns:
+          - name: order_id
+            description: "Primary key for orders."
+            tests:
+              - unique
+              - not_null
+      - name: raw_order_items
+        description: "Granular line items for each order."
+        columns:
+          - name: order_item_id
+            tests:
+              - unique
+              - not_null
+      - name: raw_payments
+        description: "Payment transaction receipts from payment processing gateways."
+        columns:
+          - name: payment_id
+            tests:
+              - unique
+              - not_null

@@ -1,0 +1,44 @@
+name: 'dbt_duckdb_ecommerce'
+version: '1.0.0'
+config-version: 2
+
+# Profile connection name matching profiles.yml
+profile: 'dbt_duckdb_ecommerce'
+
+# Standard dbt directory layout
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Medallion Architecture Model Configurations:
+# - Staging: Cleaned, cast, deduplicated views (Raw -> Bronze)
+# - Intermediate: Ephemeral/Views for complex business logic & joins (Silver)
+# - Marts: Persisted tables structured as Star Schema (Gold)
+models:
+  dbt_duckdb_ecommerce:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts
+      core:
+        +materialized: table
+        +schema: marts
+      reporting:
+        +materialized: table
+        +schema: marts
+
+seeds:
+  dbt_duckdb_ecommerce:
+    +schema: raw

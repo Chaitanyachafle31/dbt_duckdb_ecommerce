@@ -1,0 +1,11 @@
+﻿
+# dbt build artifacts and user state
+target/
+dbt_packages/
+logs/
+.user.yml
+profiles.yml
+
+# Local DuckDB database and lock/WAL files
+*.duckdb
+*.duckdb.wal
